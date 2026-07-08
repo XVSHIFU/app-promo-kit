@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import type { PromoMaterials } from "@/lib/prompts";
 
 interface FormData {
@@ -11,27 +12,13 @@ interface FormData {
   features: string;
 }
 
-const SAMPLE: FormData = {
-  appName: "FocusBear",
-  tagline: "AI focus timer that blocks distractions and schedules deep work",
-  audience: "Remote workers and students who struggle with procrastination",
-  platform: "iOS",
-  features: "AI-powered distraction blocking, smart deep-work scheduling, weekly focus analytics, pomodoro with ambient sounds",
-};
-
 const PLATFORMS = ["iOS", "Android", "iOS & Android", "Cross-platform"];
 
 type TabKey = "landingPage" | "appStore" | "tweets" | "reddit" | "coldEmail";
 
-const TABS: { key: TabKey; label: string; icon: string }[] = [
-  { key: "landingPage", label: "Landing Page", icon: "🌐" },
-  { key: "appStore", label: "App Store", icon: "📦" },
-  { key: "tweets", label: "Tweets", icon: "🐦" },
-  { key: "reddit", label: "Reddit", icon: "👾" },
-  { key: "coldEmail", label: "Cold Email", icon: "✉️" },
-];
-
 export default function Home() {
+  const { t, lang, toggleLang } = useI18n();
+
   const [form, setForm] = useState<FormData>({
     appName: "",
     tagline: "",
@@ -45,6 +32,22 @@ export default function Home() {
   const [materials, setMaterials] = useState<PromoMaterials | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>("landingPage");
   const [copied, setCopied] = useState(false);
+
+  const sample: FormData = {
+    appName: t("sampleAppName"),
+    tagline: t("sampleTagline"),
+    audience: t("sampleAudience"),
+    platform: "iOS",
+    features: t("sampleFeatures"),
+  };
+
+  const tabs: { key: TabKey; label: string; icon: string }[] = [
+    { key: "landingPage", label: t("tabLanding"), icon: "🌐" },
+    { key: "appStore", label: t("tabAppStore"), icon: "📦" },
+    { key: "tweets", label: t("tabTweets"), icon: "🐦" },
+    { key: "reddit", label: t("tabReddit"), icon: "👾" },
+    { key: "coldEmail", label: t("tabColdEmail"), icon: "✉️" },
+  ];
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -85,81 +88,88 @@ export default function Home() {
     }
   };
 
-  const fillSample = () => setForm(SAMPLE);
+  const fillSample = () => setForm(sample);
+
+  const inputClass =
+    "w-full rounded-lg border border-white/10 bg-white/[0.03] text-zinc-200 text-sm px-3 py-2 transition-opacity duration-150 focus:outline-none focus:border-[#5e6ad2]/50 placeholder:text-zinc-600";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-black dark:to-zinc-900">
+    <div className="min-h-screen bg-[#0a0a0b]">
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-black/50">
+      <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-lg font-bold text-white shadow-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#5e6ad2] text-sm font-bold text-white">
               A
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-                AppPromoKit
+              <h1 className="text-sm font-semibold tracking-tight text-zinc-100">
+                {t("appName")}
               </h1>
-              <p className="text-xs text-slate-500 dark:text-zinc-400">
-                AI App Launch Material Generator
-              </p>
+              <p className="text-xs text-zinc-500">{t("appTagline")}</p>
             </div>
           </div>
-          <a
-            href="https://hackonvibe.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600 dark:border-zinc-700 dark:text-zinc-300"
-          >
-            HackOnVibe July 2026
-          </a>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={toggleLang}
+              className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-zinc-400 transition-opacity duration-150 hover:bg-white/[0.05] hover:text-zinc-200"
+            >
+              {lang === "en" ? "中文" : "EN"}
+            </button>
+            <a
+              href="https://hackonvibe.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-zinc-400 transition-opacity duration-150 hover:bg-white/[0.05] hover:text-zinc-200"
+            >
+              {t("hackathonBadge")}
+            </a>
+          </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-10">
         {/* Hero */}
         <section className="mb-8 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-            Ship your app.{" "}
-            <span className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
-              Generate launch materials in seconds.
+          <h2 className="text-4xl font-semibold tracking-tight text-zinc-100">
+            {t("heroLine1")}{" "}
+            <span className="bg-gradient-to-r from-[#5e6ad2] to-[#8b5cf6] bg-clip-text text-transparent">
+              {t("heroLine2")}
             </span>
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-600 dark:text-zinc-400">
-            Enter your app name and positioning. Get landing page copy, App Store
-            description, tweets, a Reddit post, and a cold email — all tailored to
-            your app.
+          <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-500">
+            {t("heroDesc")}
           </p>
         </section>
 
         {/* Input Form */}
-        <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mb-8 rounded-lg border border-white/10 bg-white/[0.03] p-5">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                  App Name <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
+                  {t("appNameLabel")} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.appName}
                   onChange={(e) => handleChange("appName", e.target.value)}
-                  placeholder="e.g. FocusBear"
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                  placeholder={t("appNamePlaceholder")}
+                  className={inputClass}
                   required
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                  Platform
+                <label className="mb-1.5 block text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
+                  {t("platformLabel")}
                 </label>
                 <select
                   value={form.platform}
                   onChange={(e) => handleChange("platform", e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                  className={inputClass}
                 >
                   {PLATFORMS.map((p) => (
-                    <option key={p} value={p}>
+                    <option key={p} value={p} className="bg-[#161618] text-zinc-200">
                       {p}
                     </option>
                   ))}
@@ -168,73 +178,73 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                One-line Positioning <span className="text-red-500">*</span>
+              <label className="mb-1.5 block text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
+                {t("taglineLabel")} <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={form.tagline}
                 onChange={(e) => handleChange("tagline", e.target.value)}
-                placeholder="e.g. AI focus timer that blocks distractions and schedules deep work"
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                placeholder={t("taglinePlaceholder")}
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                Target Audience{" "}
-                <span className="text-slate-400">(optional)</span>
+              <label className="mb-1.5 block text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
+                {t("audienceLabel")}{" "}
+                <span className="text-zinc-600">{t("audienceOptional")}</span>
               </label>
               <input
                 type="text"
                 value={form.audience}
                 onChange={(e) => handleChange("audience", e.target.value)}
-                placeholder="e.g. Remote workers and students who struggle with procrastination"
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                placeholder={t("audiencePlaceholder")}
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-zinc-300">
-                Key Features{" "}
-                <span className="text-slate-400">(optional, comma-separated)</span>
+              <label className="mb-1.5 block text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
+                {t("featuresLabel")}{" "}
+                <span className="text-zinc-600">{t("featuresOptional")}</span>
               </label>
               <textarea
                 value={form.features}
                 onChange={(e) => handleChange("features", e.target.value)}
-                placeholder="e.g. AI distraction blocking, smart scheduling, focus analytics, pomodoro with ambient sounds"
+                placeholder={t("featuresPlaceholder")}
                 rows={3}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                className={inputClass}
               />
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600 dark:text-zinc-400">
+                <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-400">
                   <input
                     type="checkbox"
                     checked={usePro}
                     onChange={(e) => setUsePro(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-500 focus:ring-indigo-400"
+                    className="h-4 w-4 rounded border-white/10 bg-white/[0.03] text-[#5e6ad2] focus:outline-none"
                   />
-                  Use <span className="font-medium">deepseek-v4-pro</span>{" "}
-                  <span className="text-xs text-slate-400">(higher quality)</span>
+                  {t("usePro")}{" "}
+                  <span className="text-xs text-zinc-600">{t("higherQuality")}</span>
                 </label>
                 <button
                   type="button"
                   onClick={fillSample}
-                  className="text-xs text-indigo-500 underline hover:text-indigo-600"
+                  className="text-xs text-[#5e6ad2] transition-opacity duration-150 hover:opacity-80"
                 >
-                  Fill sample data
+                  {t("fillSample")}
                 </button>
               </div>
               <button
                 type="submit"
                 disabled={loading || !form.appName.trim() || !form.tagline.trim()}
-                className="rounded-lg bg-gradient-to-r from-indigo-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:from-indigo-600 hover:to-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-[#5e6ad2] px-6 py-2.5 text-sm font-medium text-white transition-opacity duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {loading ? "Generating…" : "Generate Materials"}
+                {loading ? t("generating") : t("generate")}
               </button>
             </div>
           </form>
@@ -242,41 +252,39 @@ export default function Home() {
 
         {/* Error */}
         {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/50 dark:text-red-400">
-            {error}
+          <div className="mb-6 rounded-lg border border-red-500/30 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+            {t("errorPrefix")} {error}
           </div>
         )}
 
-        {/* Loading skeleton */}
+        {/* Loading */}
         {loading && (
-          <div className="mb-8 space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
-            <div className="flex items-center gap-3 text-slate-500 dark:text-zinc-400">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-500" />
-              <span className="text-sm">
-                AI is crafting your launch materials…
-              </span>
+          <div className="mb-8 space-y-4 rounded-lg border border-white/10 bg-white/[0.03] p-5">
+            <div className="flex items-center gap-3 text-zinc-500">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/10 border-t-[#5e6ad2]" />
+              <span className="text-sm">{t("loadingText")}</span>
             </div>
             <div className="space-y-3">
-              <div className="h-4 w-3/4 animate-pulse rounded bg-slate-200 dark:bg-zinc-700" />
-              <div className="h-4 w-1/2 animate-pulse rounded bg-slate-200 dark:bg-zinc-700" />
-              <div className="h-4 w-2/3 animate-pulse rounded bg-slate-200 dark:bg-zinc-700" />
+              <div className="h-4 w-3/4 animate-pulse rounded bg-white/5" />
+              <div className="h-4 w-1/2 animate-pulse rounded bg-white/5" />
+              <div className="h-4 w-2/3 animate-pulse rounded bg-white/5" />
             </div>
           </div>
         )}
 
         {/* Results */}
         {materials && !loading && (
-          <section className="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-lg border border-white/10 bg-white/[0.03]">
             {/* Tabs */}
-            <div className="flex flex-wrap gap-1 border-b border-slate-200 p-2 dark:border-zinc-800">
-              {TABS.map((tab) => (
+            <div className="flex flex-wrap gap-1 border-b border-white/10 p-2">
+              {tabs.map((tab) => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition ${
+                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-opacity duration-150 ${
                     activeTab === tab.key
-                      ? "bg-indigo-500 text-white shadow-sm"
-                      : "text-slate-600 hover:bg-slate-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                      ? "bg-[#5e6ad2] text-white"
+                      : "text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-200"
                   }`}
                 >
                   <span>{tab.icon}</span>
@@ -286,56 +294,65 @@ export default function Home() {
             </div>
 
             {/* Tab content */}
-            <div className="p-6">
+            <div className="p-5">
               {activeTab === "landingPage" && (
-                <LandingPageTab data={materials.landingPage} onCopy={handleCopy} copied={copied} />
+                <LandingPageTab data={materials.landingPage} onCopy={handleCopy} copied={copied} t={t} />
               )}
               {activeTab === "appStore" && (
-                <AppStoreTab data={materials.appStore} onCopy={handleCopy} copied={copied} />
+                <AppStoreTab data={materials.appStore} onCopy={handleCopy} copied={copied} t={t} />
               )}
               {activeTab === "tweets" && (
-                <TweetsTab data={materials.tweets} onCopy={handleCopy} copied={copied} />
+                <TweetsTab data={materials.tweets} onCopy={handleCopy} copied={copied} t={t} />
               )}
               {activeTab === "reddit" && (
-                <RedditTab data={materials.reddit} onCopy={handleCopy} copied={copied} />
+                <RedditTab data={materials.reddit} onCopy={handleCopy} copied={copied} t={t} />
               )}
               {activeTab === "coldEmail" && (
-                <ColdEmailTab data={materials.coldEmail} onCopy={handleCopy} copied={copied} />
+                <ColdEmailTab data={materials.coldEmail} onCopy={handleCopy} copied={copied} t={t} />
               )}
             </div>
           </section>
         )}
 
         {/* Footer */}
-        <footer className="mt-12 text-center text-xs text-slate-400">
-          <p>
-            Built for HackOnVibe July 2026 · Powered by DeepSeek AI · Next.js +
-            Vercel
-          </p>
+        <footer className="mt-12 text-center text-xs text-zinc-600">
+          <p>{t("footerText")}</p>
         </footer>
       </main>
     </div>
   );
 }
 
-// --- Tab Components ---
+// --- Copy Button (Linear style) ---
 
 function CopyButton({
   onCopy,
   copied,
   text,
+  label,
 }: {
   onCopy: (text: string) => void;
   copied: boolean;
   text: string;
+  label: string;
 }) {
   return (
     <button
       onClick={() => onCopy(text)}
-      className="rounded-md border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600 dark:border-zinc-700 dark:text-zinc-400"
+      className="rounded-lg border border-white/10 px-3 py-1 text-xs font-medium text-zinc-400 transition-opacity duration-150 hover:bg-white/[0.05] hover:text-zinc-200"
     >
-      {copied ? "✓ Copied" : "Copy"}
+      {copied ? (label === "Copy" ? "✓ Copied" : "✓ 已复制") : label}
     </button>
+  );
+}
+
+// --- Tab Components ---
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-2 text-[10px] font-medium tracking-wider uppercase text-zinc-500">
+      {children}
+    </p>
   );
 }
 
@@ -343,49 +360,42 @@ function LandingPageTab({
   data,
   onCopy,
   copied,
+  t,
 }: {
   data: PromoMaterials["landingPage"];
   onCopy: (t: string) => void;
   copied: boolean;
+  t: (k: string) => string;
 }) {
   const fullText = `${data.headline}\n\n${data.subheading}\n\nFeatures:\n${data.features
-    .map((f) => `• ${f}`)
+    .map((f) => `- ${f}`)
     .join("\n")}\n\nCTA: ${data.cta}`;
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Landing Page Copy
-        </h3>
-        <CopyButton onCopy={onCopy} copied={copied} text={fullText} />
+        <SectionLabel>{t("landingPageCopy")}</SectionLabel>
+        <CopyButton onCopy={onCopy} copied={copied} text={fullText} label={t("copy")} />
       </div>
-      <div className="rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 p-6 dark:from-zinc-800 dark:to-zinc-800">
-        <h4 className="text-2xl font-bold text-slate-900 dark:text-white">
+      <div className="rounded-lg border border-white/10 bg-white/[0.02] p-6">
+        <h4 className="text-2xl font-semibold tracking-tight text-zinc-100">
           {data.headline}
         </h4>
-        <p className="mt-2 text-slate-600 dark:text-zinc-400">{data.subheading}</p>
+        <p className="mt-2 text-sm text-zinc-400">{data.subheading}</p>
       </div>
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Features
-        </p>
+        <SectionLabel>{t("features")}</SectionLabel>
         <ul className="space-y-1.5">
           {data.features.map((f, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2 text-sm text-slate-700 dark:text-zinc-300"
-            >
-              <span className="mt-0.5 text-indigo-500">▸</span>
+            <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+              <span className="mt-0.5 text-[#5e6ad2]">▸</span>
               {f}
             </li>
           ))}
         </ul>
       </div>
       <div>
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          CTA Button
-        </p>
-        <span className="inline-block rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white">
+        <SectionLabel>{t("ctaButton")}</SectionLabel>
+        <span className="inline-block rounded-lg bg-[#5e6ad2] px-4 py-2 text-sm font-medium text-white">
           {data.cta}
         </span>
       </div>
@@ -397,45 +407,37 @@ function AppStoreTab({
   data,
   onCopy,
   copied,
+  t,
 }: {
   data: PromoMaterials["appStore"];
   onCopy: (t: string) => void;
   copied: boolean;
+  t: (k: string) => string;
 }) {
   const fullText = `Subtitle: ${data.shortDescription}\n\n${data.fullDescription}\n\nKeywords: ${data.keywords}`;
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          App Store Description
-        </h3>
-        <CopyButton onCopy={onCopy} copied={copied} text={fullText} />
+        <SectionLabel>{t("appStoreDesc")}</SectionLabel>
+        <CopyButton onCopy={onCopy} copied={copied} text={fullText} label={t("copy")} />
       </div>
-      <div className="rounded-lg border border-slate-200 p-4 dark:border-zinc-700">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Subtitle (≤80 chars)
-        </p>
-        <p className="text-sm font-medium text-slate-900 dark:text-white">
-          {data.shortDescription}
-        </p>
+      <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+        <SectionLabel>{t("subtitleMax80")}</SectionLabel>
+        <p className="text-sm font-medium text-zinc-200">{data.shortDescription}</p>
       </div>
-      <div className="rounded-lg border border-slate-200 p-4 dark:border-zinc-700">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Full Description
-        </p>
-        <div className="whitespace-pre-line text-sm leading-relaxed text-slate-700 dark:text-zinc-300">
+      <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+        <SectionLabel>{t("fullDescription")}</SectionLabel>
+        <div className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
           {data.fullDescription}
         </div>
       </div>
-      <div className="rounded-lg border border-slate-200 p-4 dark:border-zinc-700">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          ASO Keywords
-        </p>
+      <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+        <SectionLabel>{t("asoKeywords")}</SectionLabel>
         <div className="flex flex-wrap gap-1.5">
           {data.keywords.split(",").map((kw, i) => (
             <span
               key={i}
-              className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+              className="rounded-lg border border-[#5e6ad2]/30 bg-[#5e6ad2]/10 px-2.5 py-0.5 text-xs text-[#8b9cf6]"
             >
               {kw.trim()}
             </span>
@@ -450,31 +452,30 @@ function TweetsTab({
   data,
   onCopy,
   copied,
+  t,
 }: {
   data: string[];
   onCopy: (t: string) => void;
   copied: boolean;
+  t: (k: string) => string;
 }) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Tweets / X Posts
-        </h3>
-        <CopyButton onCopy={onCopy} copied={copied} text={data.join("\n\n---\n\n")} />
+        <SectionLabel>{t("tweetsLabel")}</SectionLabel>
+        <CopyButton onCopy={onCopy} copied={copied} text={data.join("\n\n---\n\n")} label={t("copy")} />
       </div>
       {data.map((tweet, i) => (
-        <div
-          key={i}
-          className="rounded-lg border border-slate-200 p-4 dark:border-zinc-700"
-        >
+        <div key={i} className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
           <div className="flex items-start gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-500 text-xs font-bold text-white">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e6ad2]/20 text-xs">
               🐦
             </div>
             <div className="flex-1">
-              <p className="text-sm text-slate-700 dark:text-zinc-300">{tweet}</p>
-              <p className="mt-2 text-xs text-slate-400">{tweet.length} chars</p>
+              <p className="text-sm text-zinc-300">{tweet}</p>
+              <p className="mt-2 text-xs text-zinc-600">
+                {tweet.length} {t("chars")}
+              </p>
             </div>
           </div>
         </div>
@@ -487,25 +488,23 @@ function RedditTab({
   data,
   onCopy,
   copied,
+  t,
 }: {
   data: PromoMaterials["reddit"];
   onCopy: (t: string) => void;
   copied: boolean;
+  t: (k: string) => string;
 }) {
   const fullText = `${data.title}\n\n${data.body}`;
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Reddit Post
-        </h3>
-        <CopyButton onCopy={onCopy} copied={copied} text={fullText} />
+        <SectionLabel>{t("redditPost")}</SectionLabel>
+        <CopyButton onCopy={onCopy} copied={copied} text={fullText} label={t("copy")} />
       </div>
-      <div className="rounded-lg border border-orange-200 bg-orange-50/50 p-4 dark:border-orange-800/50 dark:bg-orange-950/20">
-        <h4 className="mb-2 text-base font-semibold text-slate-900 dark:text-white">
-          {data.title}
-        </h4>
-        <div className="whitespace-pre-line text-sm leading-relaxed text-slate-700 dark:text-zinc-300">
+      <div className="rounded-lg border border-orange-500/20 bg-orange-500/5 p-4">
+        <h4 className="mb-2 text-base font-medium text-zinc-100">{data.title}</h4>
+        <div className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
           {data.body}
         </div>
       </div>
@@ -517,30 +516,28 @@ function ColdEmailTab({
   data,
   onCopy,
   copied,
+  t,
 }: {
   data: PromoMaterials["coldEmail"];
   onCopy: (t: string) => void;
   copied: boolean;
+  t: (k: string) => string;
 }) {
   const fullText = `Subject: ${data.subject}\n\n${data.body}`;
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Cold Email
-        </h3>
-        <CopyButton onCopy={onCopy} copied={copied} text={fullText} />
+        <SectionLabel>{t("coldEmailLabel")}</SectionLabel>
+        <CopyButton onCopy={onCopy} copied={copied} text={fullText} label={t("copy")} />
       </div>
-      <div className="rounded-lg border border-slate-200 p-4 dark:border-zinc-700">
-        <div className="mb-3 border-b border-slate-100 pb-3 dark:border-zinc-700">
-          <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-            Subject:{" "}
+      <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+        <div className="mb-3 border-b border-white/10 pb-3">
+          <span className="text-[10px] font-medium tracking-wider uppercase text-zinc-500">
+            {t("subject")}:{" "}
           </span>
-          <span className="text-sm font-medium text-slate-900 dark:text-white">
-            {data.subject}
-          </span>
+          <span className="text-sm font-medium text-zinc-200">{data.subject}</span>
         </div>
-        <div className="whitespace-pre-line text-sm leading-relaxed text-slate-700 dark:text-zinc-300">
+        <div className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
           {data.body}
         </div>
       </div>

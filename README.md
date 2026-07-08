@@ -2,6 +2,8 @@
 
 > Built for **HackOnVibe July 2026** hackathon (Theme: Promote a newly launched mobile app)
 
+**English** | [中文](./README.zh-CN.md)
+
 ## What it does
 
 Enter your app name and one-line positioning — get **5 channels of launch materials** in seconds:
