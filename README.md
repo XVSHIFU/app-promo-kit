@@ -35,7 +35,7 @@ Each channel's tone is adapted: App Store = professional & discoverable, Twitter
 
 ```bash
 # Clone
-git clone https://github.com/YOUR_USERNAME/app-promo-kit.git
+git clone https://github.com/XVSHIFU/app-promo-kit.git
 cd app-promo-kit
 
 # Install
