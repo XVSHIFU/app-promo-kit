@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent-internal files (kept locally for the build agent; NOT published to the submission repo)
+.claude/
+CLAUDE.md
+AGENTS.md
+MEMORY.md
+PLAN.md
+PROMPT.md
+.zcode/
+.claude/settings.local.json

@@ -70,7 +70,7 @@ const translations = {
     copied: "✓ Copied",
 
     // Footer
-    footerText: "Built for HackOnVibe July 2026 · Powered by DeepSeek AI · Next.js + Vercel",
+    footerText: "Built for HackOnVibe July 2026 · Powered by DeepSeek AI · Next.js + Netlify",
 
     // Error
     errorPrefix: "Generation failed:",
@@ -141,7 +141,7 @@ const translations = {
     copied: "✓ 已复制",
 
     // Footer
-    footerText: "HackOnVibe 2026 七月赛参赛作品 · 由 DeepSeek AI 驱动 · Next.js + Vercel",
+    footerText: "HackOnVibe 2026 七月赛参赛作品 · 由 DeepSeek AI 驱动 · Next.js + Netlify",
 
     // Error
     errorPrefix: "生成失败：",

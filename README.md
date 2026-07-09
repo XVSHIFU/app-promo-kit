@@ -2,6 +2,8 @@
 
 > Built for **HackOnVibe July 2026** hackathon (Theme: Promote a newly launched mobile app)
 
+> 🚀 **Live Demo**: https://app-promo-kit.netlify.app
+
 **English** | [中文](./README.zh-CN.md)
 
 ## What it does
@@ -30,7 +32,7 @@ Each channel's tone is adapted: App Store = professional & discoverable, Twitter
 - **Framework**: Next.js 16 (App Router, webpack)
 - **Styling**: Tailwind CSS v4
 - **AI**: DeepSeek API (OpenAI SDK compatible)
-- **Deploy**: Vercel
+- **Deploy**: Netlify (live at https://app-promo-kit.netlify.app)
 - **Language**: TypeScript
 
 ## Getting Started
@@ -74,8 +76,7 @@ Everything in this repo was built during the HackOnVibe July 2026 build weekend 
 - DeepSeek API integration with structured JSON output
 - Multi-channel prompt engineering system
 - Tabbed results UI with copy-to-clipboard
-- Light/dark mode support
-- Vercel deployment
+- Netlify deployment (live at https://app-promo-kit.netlify.app)
 
 ## License
 

@@ -2,6 +2,8 @@
 
 > 为 **HackOnVibe 2026 七月赛** 黑客松构建（主题：推广一款新上架的移动 App）
 
+> 🚀 **线上 Demo**：https://app-promo-kit.netlify.app
+
 [English](./README.md) | **中文**
 
 ## 它能做什么
@@ -31,7 +33,7 @@
 - **样式**：Tailwind CSS v4
 - **UI 风格**：Linear Style（暗色极简开发者风）
 - **AI**：DeepSeek API（OpenAI SDK 兼容）
-- **部署**：Vercel
+- **部署**：Netlify（线上 https://app-promo-kit.netlify.app）
 - **语言**：TypeScript
 - **国际化**：中英文切换（自建轻量 i18n）
 
@@ -77,7 +79,7 @@ DEEPSEEK_MODEL_PRO=deepseek-v4-pro
 - 多渠道 Prompt 工程系统
 - Linear Style 暗色 UI + 标签页结果展示 + 复制功能
 - 中英文双语切换
-- Vercel 部署
+- Netlify 部署（线上 https://app-promo-kit.netlify.app）
 
 ## 开源协议
 
