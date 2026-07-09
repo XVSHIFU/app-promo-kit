@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type TranslationKey } from "@/lib/i18n";
 import type { PromoMaterials } from "@/lib/prompts";
 
 interface FormData {
@@ -365,7 +365,7 @@ function LandingPageTab({
   data: PromoMaterials["landingPage"];
   onCopy: (t: string) => void;
   copied: boolean;
-  t: (k: string) => string;
+  t: (key: TranslationKey) => string;
 }) {
   const fullText = `${data.headline}\n\n${data.subheading}\n\nFeatures:\n${data.features
     .map((f) => `- ${f}`)
@@ -412,7 +412,7 @@ function AppStoreTab({
   data: PromoMaterials["appStore"];
   onCopy: (t: string) => void;
   copied: boolean;
-  t: (k: string) => string;
+  t: (key: TranslationKey) => string;
 }) {
   const fullText = `Subtitle: ${data.shortDescription}\n\n${data.fullDescription}\n\nKeywords: ${data.keywords}`;
   return (
@@ -457,7 +457,7 @@ function TweetsTab({
   data: string[];
   onCopy: (t: string) => void;
   copied: boolean;
-  t: (k: string) => string;
+  t: (key: TranslationKey) => string;
 }) {
   return (
     <div className="space-y-3">
@@ -493,7 +493,7 @@ function RedditTab({
   data: PromoMaterials["reddit"];
   onCopy: (t: string) => void;
   copied: boolean;
-  t: (k: string) => string;
+  t: (key: TranslationKey) => string;
 }) {
   const fullText = `${data.title}\n\n${data.body}`;
   return (
@@ -521,7 +521,7 @@ function ColdEmailTab({
   data: PromoMaterials["coldEmail"];
   onCopy: (t: string) => void;
   copied: boolean;
-  t: (k: string) => string;
+  t: (key: TranslationKey) => string;
 }) {
   const fullText = `Subject: ${data.subject}\n\n${data.body}`;
   return (
