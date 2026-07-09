@@ -71,7 +71,7 @@ DEEPSEEK_MODEL_PRO=deepseek-v4-pro
 
 ## What was built during the hackathon
 
-Everything in this repo was built during the HackOnVibe July 2026 build weekend (July 10–12, 2026):
+This project was built on a pre-existing skeleton (Next.js scaffolding + initial UI) and refined into a complete, deployed product during the HackOnVibe July 2026 build weekend (July 10–12, 2026):
 - Next.js project setup with App Router + Tailwind
 - DeepSeek API integration with structured JSON output
 - Multi-channel prompt engineering system

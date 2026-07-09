@@ -73,7 +73,7 @@ DEEPSEEK_MODEL_PRO=deepseek-v4-pro
 
 ## 黑客松期间完成的工作
 
-本仓库所有代码均在 HackOnVibe 2026 七月赛构建周末（7 月 10–12 日）完成：
+本项目基于一份预先搭好的骨架（Next.js 脚手架 + 初始 UI）起步，在 HackOnVibe 2026 七月赛构建周末（7 月 10–12 日）期间打磨为完整的可部署成品：
 - Next.js 项目搭建（App Router + Tailwind）
 - DeepSeek API 集成（结构化 JSON 输出）
 - 多渠道 Prompt 工程系统
