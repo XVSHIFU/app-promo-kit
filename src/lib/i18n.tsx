@@ -10,12 +10,14 @@ const translations = {
     appName: "AppPromoKit",
     appTagline: "AI App Launch Material Generator",
     hackathonBadge: "HackOnVibe July 2026",
+    themeToggle: "Toggle theme",
 
     // Hero
     heroLine1: "Ship your app.",
     heroLine2: "Generate launch materials in seconds.",
     heroDesc:
       "Enter your app name and positioning. Get landing page copy, App Store description, tweets, a Reddit post, and a cold email — all tailored to your app.",
+    heroBadge: "DeepSeek-powered",
 
     // Form
     appNameLabel: "App Name",
@@ -43,6 +45,8 @@ const translations = {
 
     // Loading
     loadingText: "AI is crafting your launch materials…",
+    emptyStateTitle: "Your launch kit appears here",
+    emptyStateDesc: "Fill in your app details and generate five channels of launch copy in seconds.",
 
     // Tabs
     tabLanding: "Landing Page",
@@ -81,12 +85,14 @@ const translations = {
     appName: "AppPromoKit",
     appTagline: "AI 应用推广素材生成器",
     hackathonBadge: "HackOnVibe 2026 七月赛",
+    themeToggle: "切换主题",
 
     // Hero
     heroLine1: "发布你的 App。",
     heroLine2: "秒级生成全套推广素材。",
     heroDesc:
       "输入 App 名称和定位，一键生成落地页文案、应用商店描述、推文、Reddit 帖子和冷启动邮件——全部为你的 App 量身定制。",
+    heroBadge: "DeepSeek 驱动",
 
     // Form
     appNameLabel: "App 名称",
@@ -114,6 +120,8 @@ const translations = {
 
     // Loading
     loadingText: "AI 正在生成你的推广素材…",
+    emptyStateTitle: "你的发布素材将出现在这里",
+    emptyStateDesc: "填写应用信息，秒级生成五渠道发布文案。",
 
     // Tabs
     tabLanding: "落地页",

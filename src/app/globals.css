@@ -1,46 +1,319 @@
 @import "tailwindcss";
 
+/* =========================================================
+   THEME TOKENS — LIGHT is the default, DARK via [data-theme]
+   Every themeable color is a variable. Components never use
+   hardcoded hex — they read these via @theme inline mappings
+   (bg-canvas, text-ink, border-line, bg-accent, …).
+   ========================================================= */
+
 :root {
-  --background: #0a0a0b;
-  --foreground: #e4e4e7;
-  --brand: #5e6ad2;
-  --border: rgba(255, 255, 255, 0.1);
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface-hover: rgba(255, 255, 255, 0.05);
+  /* Light — warm cream / paper base */
+  --background: #faf6ef;
+  --surface: #ffffff;
+  --surface-2: #f6f1e8;
+  --surface-hover: #f1ebdf;
+  --foreground: #1b1a17;
+  --text-muted: #6b665d;
+
+  --accent: #ff5436; /* signature coral */
+  --accent-2: #ffb088; /* peach (gradient end) */
+  --accent-text: #b8351c; /* deep coral — passes AA on cream */
+  --accent-deep: #8f2a15; /* gradient start (deep) */
+  --accent-soft: #ffe7e0; /* coral tint background */
+  --accent-foreground: #1b1a17; /* ink text on coral fills */
+
+  --danger: #dc2626;
+  --danger-text: #9b1c1c;
+  --danger-soft: #fee2e2;
+
+  --border: rgba(27, 26, 23, 0.1);
+  --border-strong: rgba(27, 26, 23, 0.18);
+  --ring: rgba(255, 84, 54, 0.28);
+  --sheen: rgba(255, 255, 255, 0.25);
+
+  /* ambient background art (used via inline styles) */
+  --blob1: rgba(255, 84, 54, 0.2);
+  --blob2: rgba(255, 176, 136, 0.34);
+  --blob3: rgba(14, 124, 123, 0.12);
+  --grid-line: rgba(27, 26, 23, 0.05);
+
+  color-scheme: light;
 }
 
+[data-theme="dark"] {
+  /* Dark — warm near-black (not pitch), genuinely designed */
+  --background: #14110e;
+  --surface: #1f1b17;
+  --surface-2: #251f18;
+  --surface-hover: #2b251e;
+  --foreground: #f5efe6;
+  --text-muted: #a89f92;
+
+  --accent: #ff6b50;
+  --accent-2: #ff9a7a;
+  --accent-text: #ff8a72; /* coral text — passes AA on dark */
+  --accent-deep: #c44a30;
+  --accent-soft: rgba(255, 107, 80, 0.14);
+  --accent-foreground: #14110e; /* ink text on coral fills */
+
+  --danger: #f87171;
+  --danger-text: #fca5a5;
+  --danger-soft: rgba(248, 113, 113, 0.12);
+
+  --border: rgba(255, 245, 235, 0.1);
+  --border-strong: rgba(255, 245, 235, 0.2);
+  --ring: rgba(255, 107, 80, 0.34);
+  --sheen: rgba(255, 255, 255, 0.18);
+
+  --blob1: rgba(255, 107, 80, 0.18);
+  --blob2: rgba(255, 154, 122, 0.12);
+  --blob3: rgba(56, 189, 248, 0.12);
+  --grid-line: rgba(255, 245, 235, 0.04);
+
+  color-scheme: dark;
+}
+
+/* Map tokens to Tailwind semantic utilities (bg-canvas, text-ink, …) */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-canvas: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-hover: var(--surface-hover);
+  --color-ink: var(--foreground);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-text: var(--accent-text);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-danger-text: var(--danger-text);
+  --color-danger-soft: var(--danger-soft);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-sheen: var(--sheen);
   --font-sans: var(--font-inter), -apple-system, system-ui, sans-serif;
 }
 
+html {
+  background-color: var(--background);
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.011em;
 }
 
-/* Scrollbar — Linear style */
+/* Native controls follow the accent + theme */
+input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+select,
+option {
+  background-color: var(--surface);
+  color: var(--foreground);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  background: var(--border-strong);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--text-muted);
 }
 
-/* Selection */
 ::selection {
-  background: rgba(94, 106, 210, 0.3);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+/* ===================== Keyframes ===================== */
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, 26px, 0) scale(1.08);
+  }
+}
+
+@keyframes shimmer-text {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes fade-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--ring);
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================== Animation utilities ===================== */
+.anim-aurora {
+  animation: aurora-drift 16s ease-in-out infinite;
+}
+.anim-fade-slide {
+  animation: fade-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade {
+  animation: fade-in 0.45s ease both;
+}
+.anim-spin {
+  animation: spin 0.8s linear infinite;
+}
+.anim-pulse-dot {
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+/* Animated gradient text for the hero accent line */
+.shimmer-text {
+  background-size: 200% auto;
+  animation: shimmer-text 7s linear infinite;
+}
+
+/* Loading skeleton sweep — theme-aware */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    var(--border-strong) 37%,
+    var(--border) 63%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Staggered entrance — apply to a container; children cascade in */
+.stagger > * {
+  animation: fade-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.11s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.17s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.23s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.29s;
+}
+.stagger > *:nth-child(6) {
+  animation-delay: 0.35s;
+}
+.stagger > *:nth-child(7) {
+  animation-delay: 0.41s;
+}
+.stagger > *:nth-child(8) {
+  animation-delay: 0.47s;
+}
+
+/* Gradient hairline border for premium cards */
+.grad-border {
+  position: relative;
+}
+.grad-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--border-strong), var(--border));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Accessible focus ring */
+.focus-ring:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Hide scrollbar for horizontal tab strip */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===================== Reduced motion ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
