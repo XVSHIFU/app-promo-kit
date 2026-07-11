@@ -72,6 +72,8 @@ const translations = {
     // Copy
     copy: "Copy",
     copied: "✓ Copied",
+    exportKit: "Export kit",
+    launchKit: "launch kit",
 
     // Footer
     footerText: "Built for HackOnVibe July 2026 · Powered by DeepSeek AI · Next.js + Netlify",
@@ -147,6 +149,8 @@ const translations = {
     // Copy
     copy: "复制",
     copied: "✓ 已复制",
+    exportKit: "导出素材包",
+    launchKit: "发布素材",
 
     // Footer
     footerText: "HackOnVibe 2026 七月赛参赛作品 · 由 DeepSeek AI 驱动 · Next.js + Netlify",
