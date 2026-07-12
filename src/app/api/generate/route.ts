@@ -2,11 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { SYSTEM_PROMPT, buildUserPrompt, type AppInput, type PromoMaterials } from "@/lib/prompts";
 
-const client = new OpenAI({
-  apiKey: process.env.DEEPSEEK_API_KEY,
-  baseURL: process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com",
-});
-
 export async function POST(req: NextRequest) {
   try {
     const body: AppInput & { model?: string } = await req.json();
@@ -18,6 +13,20 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Create the client at request time (not module level) so `next build`'s
+    // "collect page data" phase doesn't require the API key during build.
+    const apiKey = process.env.DEEPSEEK_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "DeepSeek API key not configured on the server." },
+        { status: 500 }
+      );
+    }
+    const client = new OpenAI({
+      apiKey,
+      baseURL: process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com",
+    });
 
     const usePro = body.model === "pro";
     const model = usePro
